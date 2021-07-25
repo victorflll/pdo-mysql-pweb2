@@ -4,4 +4,5 @@ i) o registro de usuário deve conter os dados "nome completo", "nome de usuári
 ii) o registro do campo senha deve ser criptografado; 
 iii) ao fazer login, uma tela com a listagem dos usuários cadastrados deve ser exibida; 
 iv) as interações com o banco de dados devem ser realizadas com PDO; 
-v) garanta que não seja possível cadastrar dois usuários com o mesmo nome de usuário e/ou e-mail.
+v) garanta que não seja possível cadastrar dois usuários com o mesmo nome de usuário e/ou e-mail;
+vi) permita, na tela de listagem, fazer uma busca e exibição de um usuário específico.
