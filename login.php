@@ -1,28 +1,27 @@
 <?php
     include('connection.php');
+    include('user.php');
+    
     if(empty($_POST['username']) || empty($_POST['password'])){
         header('Location: login.html');
         exit();
     }
 
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
-    
-    $sql = "SELECT `username`,`password` FROM `user` WHERE 
-    `username`='".$username."' and `password`='".md5($password)."'";
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-    $result = mysqli_query($conn, $sql);
+    $stmt = $conn->prepare("SELECT `username`, `password` FROM `user` WHERE `username` = :username and `password` = :password");
 
-    $count = mysqli_num_rows($result);
+    $stmt->bindparam(":username", $username);
+    $stmt->bindValue(":password", md5($password));
+    $stmt->execute();
 
-    if($count == 1) {
-        echo "Login realizado com sucesso";
-        header("Location: list.php");
-        exit();
-    }else{
+    if($stmt->rowCount() == 0){
         echo "Usuário ou senha incorretas.";
-        exit();
+        ?>
+            <button><a href="login.html">Voltar</a></button>
+        <?php
+    }else{
+        header("Location: list.php");
     }
-
-    $conn->close();
 ?>
